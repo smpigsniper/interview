@@ -1,10 +1,30 @@
 <template>
-    <button @click="getLocation()" type="button" class="btn btn-default btn-lg">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-primary" @click="getLocation()">Get Location</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- <button @click="getLocation()" type="button" class="btn btn-default btn-lg">
         <span class="material-icons">
             Get Location
         </span>
-    </button>
-
+    </button> -->
+    <div>
+        My Location 
+        <br>
+        Latitude: {{ this.myLocation.lat }}, Longitude: {{ this.myLocation.lng }}
+    </div>
 </template>
 
 <script>
@@ -12,10 +32,7 @@
 export default {
     data() {
         return {
-            location: {
-                lat: '',
-                long: '',
-            }
+            myLocation: { lat: '', lng: '' },
         }
     },
     // data() {
@@ -30,13 +47,15 @@ export default {
     // },
     methods: {
         getLocation() {
+            var self = this;
             navigator.geolocation.getCurrentPosition(success, fail);
             if (navigator.geolocation == true) {
                 navigator.geolocation.getCurrentPosition(success, fail);
-
                 //this.getGeolocationInformation();
             }
             function success(position) {
+                self.myLocation.lat = position.coords.latitude;
+                self.myLocation.lng = position.coords.longitude;
                 console.log("lat: " + position.coords.latitude, "long:" + position.coords.longitude);
                 // console.log("postal_code: " + position.coords.postal_code)
             }

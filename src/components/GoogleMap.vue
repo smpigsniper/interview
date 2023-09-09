@@ -10,19 +10,16 @@
             </button>
         </div>
 
-        <div>
 
-        </div>
 
         <div>
-            <GMapMap :center="{ lat: 49.246292, lng: -123.116226 }" :zoom="11" style="width: 800px; height: 500px">
+            <GMapMap :center=this.center :zoom="11" style="width: 100%; height: 500px">
                 <GMapMarker :key="index" v-for="(m, index) in markers" :position="m.position" />
             </GMapMap>
         </div>
-    </div>
-    <br>
 
-    <div class="container">
+        <br>
+
         <div class="row">
             <div class="col">
                 <button class="btn btn-danger" @click='deleteSelectedRecord'>
@@ -35,16 +32,14 @@
                 </button>
             </div>
         </div>
-    </div>
-
-    <div class="container">
+        <br>
         Last Search Location Time: {{ this.location_DateTime }}
-    </div>
 
 
-    <br>
-    <div>
-        <EasyDataTable v-model:items-selected="itemsSelected" :headers="headers" :rows-per-page="10" :items="items" />
+        <br>
+        <div>
+            <EasyDataTable v-model:items-selected="itemsSelected" :headers="headers" :rows-per-page="10" :items="items" />
+        </div>
     </div>
 </template>
 
@@ -81,7 +76,7 @@ export default {
     name: 'GoogleMap',
     data() {
         return {
-            center: ref({ lat: 49.246292, lng: -123.116226 }),
+            center: { lat: 49.246292, lng: -123.116226 },
             currentPlace: null,
             markers: [],
             places: [],
@@ -105,7 +100,8 @@ export default {
                 };
                 this.markers.push({ position: marker });
                 this.places.push(this.currentPlace);
-                this.center = marker;
+                this.center.lat = this.currentPlace.geometry.location.lat();
+                this.center.lng = this.currentPlace.geometry.location.lng();
 
                 const randomId = 'id-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now().toString(36);
 
@@ -146,7 +142,7 @@ export default {
                 console.log(response)
                 console.log(timeZone);
                 console.log(localDate);
-                
+
             })
         },
     },

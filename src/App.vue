@@ -1,6 +1,7 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <MainPage/>
+  <br>
   <GoogleMap/>
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 </template>
